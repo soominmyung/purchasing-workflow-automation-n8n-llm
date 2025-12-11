@@ -15,6 +15,15 @@ All data is anonymised. The structure mirrors the production purchasing environm
 
 ## 1. System Overview
 
+**Layer 1**
+<img width="1222" height="521" alt="Layer1" src="https://github.com/user-attachments/assets/d10d1697-4c9d-40c1-8858-715fc99a681a" />
+
+<br>
+
+**Layer 2**
+<img width="1297" height="586" alt="Layer2" src="https://github.com/user-attachments/assets/295d6a31-b0ea-4d08-8d29-9761cd9ea4ea" />
+
+
 The automation converts a daily CSV snapshot into complete purchasing artefacts:
 
 • Internal analysis report — structured insights and risk assessments  
