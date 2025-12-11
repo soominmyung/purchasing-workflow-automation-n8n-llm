@@ -1,0 +1,2204 @@
+{
+  "name": "Purchasing Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -736,
+        160
+      ],
+      "id": "73f4ff9e-eb1a-44d8-826f-5d0a87453b16",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {
+          "maxRetries": 3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -144,
+        304
+      ],
+      "id": "5ffd6f49-273f-4849-93ec-71378b598660",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -1104,
+        704
+      ],
+      "id": "af38ba02-2b03-40d6-be83-9ed27dee2059",
+      "name": "Extract from PDF5"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        864
+      ],
+      "id": "8c45084f-0394-45a0-8db7-0d900c99003b",
+      "name": "Embeddings OpenAI4",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.pageContent }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "supplier_name",
+                "value": "={{ $json.metadata.supplier_name }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -672,
+        864
+      ],
+      "id": "1a15e642-ead8-45e3-90d9-a30a10fbc157",
+      "name": "Default Data Loader3"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -1104,
+        1008
+      ],
+      "id": "d101726f-23f2-4a79-b737-160583eba465",
+      "name": "Extract from PDF6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        1184
+      ],
+      "id": "fe1354ed-fc44-421c-8101-a2f01ffc28a6",
+      "name": "Embeddings OpenAI5",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.pageContent }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "item_code",
+                "value": "={{ $json.metadata.item_code }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -672,
+        1184
+      ],
+      "id": "abbf13c3-acf8-4580-ae61-360fc268c773",
+      "name": "Default Data Loader4"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "item_history",
+          "mode": "list"
+        },
+        "clearStore": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -800,
+        1008
+      ],
+      "id": "4a944ae5-e3dd-478e-ae3b-916d2e88e04f",
+      "name": "Item History SVS"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        160
+      ],
+      "id": "02749c9f-d10e-4877-bc4c-1f2ba2d8239b",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "supplier_history",
+          "mode": "list"
+        },
+        "clearStore": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -800,
+        704
+      ],
+      "id": "12453204-1118-4b3c-a39d-1a1e6f146428",
+      "name": "Supplier History SVS"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -304,
+        -240
+      ],
+      "id": "48da2144-6dc0-4fc0-a2c7-b057df3ec824",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        -32
+      ],
+      "id": "d540b18b-93c9-4b1d-9d11-c847d84602ac",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "This tool looks up past information about ONE supplier.\n\nInput: a short JSON or text that clearly includes the supplier name (e.g. \"SupplierA\") and optional context.\n\nOutput: at most a small set of concise documents about:\n- delivery delays, lead time variability\n- price changes, MOQ constraints\n- quality or service incidents\n- negotiation patterns\n\nIf there is no relevant document, the tool will return an empty list.\n\nVery important:\n- Calling this tool more than once with similar queries will NOT return new useful information.\n- If the result is empty or weakly relevant, you must assume there is no supplier history and continue the task without retrying.\n",
+        "memoryKey": {
+          "__rl": true,
+          "value": "supplier_history",
+          "mode": "list",
+          "cachedResultName": "supplier_history"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -624,
+        288
+      ],
+      "id": "8b72f853-a9da-4556-8e86-1a4d69b5f37b",
+      "name": "Supplier History"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -416,
+        320
+      ],
+      "id": "e956ffd9-8848-4499-9111-f15aa4ddb1c9",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "This tool looks up past information about ONE OR MORE items.\n\nInput: a short JSON or text that includes one or more item codes and names.\nFor example: \"Item history for 100000 ItemA and 100004 ItemE\".\n\nOutput: at most a small set of concise documents about:\n- past stock-outs or extreme stock pressure\n- unusual demand spikes\n- safety or quality incidents\n- unusually long or short lead times\n\nSeveral chunks may describe the same incident. You should treat them as a single event.\n\nIf there is no relevant document, the tool will return an empty list.\n\nVery important:\n- Calling this tool more than once with similar queries will NOT return new useful information.\n- If the result is empty or weakly relevant, you must assume there is no item history and continue without retrying.\n",
+        "memoryKey": {
+          "__rl": true,
+          "value": "item_history",
+          "mode": "list",
+          "cachedResultName": "item_history"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -624,
+        128
+      ],
+      "id": "8e36abe6-609b-4b47-b7c8-b7387c3ddf04",
+      "name": "Item History"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -448,
+        176
+      ],
+      "id": "4f87e0f7-22de-47fe-948f-a2fa15d43d1d",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        624
+      ],
+      "id": "8a49a4a3-d1a7-4e94-8045-dbdc7299863c",
+      "name": "Extract from PDF"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        112,
+        768
+      ],
+      "id": "6df6de0b-35e7-4a3b-a7f7-fd5ae809eefd",
+      "name": "Embeddings OpenAI6",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "doc_type",
+                "value": "item_history"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        256,
+        768
+      ],
+      "id": "8856a77f-c6a3-4202-8332-8b39a3e0648d",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        896
+      ],
+      "id": "8deea4e7-e718-4b8e-adb3-f32d4d5965f6",
+      "name": "Extract from PDF1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        112,
+        1024
+      ],
+      "id": "f351bdf7-6217-4525-a1c4-00a6d9fcc189",
+      "name": "Embeddings OpenAI7",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "doc_type",
+                "value": "item_history"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        256,
+        1024
+      ],
+      "id": "34defd1e-d316-4011-98cf-e9220cc535c1",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        1168
+      ],
+      "id": "9278600d-f114-47bf-9c2b-dfc7cfe1b9dc",
+      "name": "Extract from PDF2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        112,
+        1312
+      ],
+      "id": "5d795964-9008-4483-a38f-fadfc9bb04b0",
+      "name": "Embeddings OpenAI8",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "doc_type",
+                "value": "item_history"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        256,
+        1312
+      ],
+      "id": "d2ccdd66-8da3-46b5-b66d-0f0169c0d464",
+      "name": "Default Data Loader5"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "email_examples",
+          "mode": "list"
+        },
+        "clearStore": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        1168
+      ],
+      "id": "574383f4-8d4c-4c92-9b80-9e7a80740435",
+      "name": "Email Examples SVS"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "analysis_examples",
+          "mode": "list"
+        },
+        "clearStore": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        624
+      ],
+      "id": "cb95ee6b-d381-43ed-97e1-2e06429a7a90",
+      "name": "Analysis Examples SVS"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "request_examples",
+          "mode": "list"
+        },
+        "clearStore": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        896
+      ],
+      "id": "5b9fe703-bbf0-45e4-8116-fdbce0b67ec8",
+      "name": "Request Examples SVS"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json }}",
+        "options": {
+          "systemMessage": "You are the Analysis Agent for purchasing and inventory operations.\nYou ALWAYS receive exactly ONE JSON object as the user message.\nTreat the entire user message as JSON, not natural language.\n\n1. INPUT JSON STRUCTURE\n\nThe user JSON has this shape:\n\n{\n  \"snapshot_date\": \"YYYY-MM-DD\",\n  \"supplier\": \"SupplierName\",\n  \"items\": [\n    {\n      \"item_code\": \"100000\",\n      \"item_name\": \"ItemA\",\n      \"risk_level\": \"High\" | \"Medium\" | \"Low\",\n      \"current_stock\": 100,\n      \"wks_to_oos\": 25,\n      \"suggested_quantity\": <number or null>,\n      \"recommended_latest_po_date\": \"YYYY-MM-DD\",\n      \"recommended_latest_delivery_date\": \"YYYY-MM-DD\",\n      \"recommended_latest_po_timing\": \"string\",\n      \"recommended_latest_delivery_timing\": \"string\"\n    }\n  ]\n}\n\n\nThis JSON is the ONLY source of truth.\n\nYou MUST NOT:\n\nadd or remove items,\n\nchange any input values,\n\ncalculate or modify suggested_quantity.\n\n2. TOOLS AVAILABLE\nsupplier_history\n\nInput: a natural language query string.\n\nVector-store metadata key: supplier_name\n\nitem_history\n\nInput: a natural language query string.\n\nVector-store metadata key: item_code\n\n❗ No other tools exist.\n❗ best_practices has been removed and must not be referenced.\n\nTOOL USAGE RULES\nYou MUST:\n\nCall supplier_history EXACTLY ONCE, using the supplier name from the input JSON.\nYour query MUST include:\n\nsupplier_name: <supplier>\n\n\nCall item_history EXACTLY ONCE, including ALL item codes in a single query.\nExample pattern:\n\nitem_code: 100000 OR item_code: 100001\n\nAfter retrieving history:\n\nIf supplier_history returns incidents:\n\nAdd at least one critical_question with \"reason\": \"supplier_history\".\n\nMention the incident in purchasing_report_markdown.\n\nIf item_history returns incidents for a specific item_code:\n\nAdd at least one critical_question for that item with \"reason\": \"item_history\".\n\nIts notes field in replenishment_timeline MUST summarize it.\n\nIf there is no history:\n\nDo NOT make anything up.\n\nState explicitly:\n\n\"No supplier history available\" and/or\n\n\"No item history available\"\nin markdown or notes.\n\nNEVER:\n\nCall a history tool more than once.\n\nInvent or assume history.\n\nUse item_name for history lookup (only item_code).\n\nUse any tool named \"best_practices\".\n\n3. REQUIRED OUTPUT FORMAT\n\nReturn ONLY this JSON structure:\n\n{\n  \"purchasing_report_markdown\": \"<markdown>\",\n  \"critical_questions\": [ ... ],\n  \"replenishment_timeline\": [ ... ]\n}\n\n\nNothing before or after.\n\n3.1 purchasing_report_markdown\n\nInclude:\n\nSnapshot Date\n\nSupplier\n\nShort analytic summary using:\n\nrisk levels\n\nwks_to_oos trends\n\nrecommended dates\n\nsupplier/item history findings (if any)\n\nOR explicitly state no history exists\n\nThen generate exactly ONE table:\n\n| ItemCode | ItemName | CurrentStock | WksToOOS | RiskLevel | Latest PO Date | Latest Delivery Date |\n\n\nValues must match input exactly.\n\n3.2 critical_questions\n\nReturn array of objects:\n\n{\n  \"target\": \"general\" OR \"<ItemCode>\",\n  \"question\": \"<clear operational question>\",\n  \"reason\": \"supplier_history\" | \"item_history\" | \"generic\"\n}\n\n\nUse generic ONLY when no relevant history exists.\n\n3.3 replenishment_timeline\n\nReturn ONE entry per item, preserving all fields exactly:\n\n{\n  \"item_code\": \"...\",\n  \"item_name\": \"...\",\n  \"supplier\": \"...\",\n  \"risk_level\": \"...\",\n  \"current_stock\": <...>,\n  \"wks_to_oos\": <...>,\n  \"suggested_quantity\": <...>,\n  \"snapshot_date\": \"...\",\n  \"recommended_latest_po_timing\": \"...\",\n  \"recommended_latest_delivery_timing\": \"...\",\n  \"recommended_latest_po_date\": \"...\",\n  \"recommended_latest_delivery_date\": \"...\",\n  \"notes\": \"...\"\n}\n\nNotes rules:\n\nIf item history exists → summarize impact in 1 short sentence.\n\nElse if supplier history exists →\n\"Supplier has past delivery delays; consider ordering earlier.\"\n\nElse →\n\"No supplier or item history available; based only on current stock and precomputed deadlines.\"\n\nDo NOT add or modify anything else.\n\n4. FINAL REMINDERS\n\nUse ONLY input JSON + history tool results.\n\nDo NOT reference any removed tool (e.g., best_practices).\n\nDo NOT fabricate incidents.\n\nTool queries MUST reference:\n\nsupplier_name: field in metadata\n\nitem_code: field in metadata\n\nOutput ONLY valid JSON."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -592,
+        -32
+      ],
+      "id": "99adbfb6-e80f-4e0e-9c53-0d9c0b6e7f3a",
+      "name": "Analysis Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        80
+      ],
+      "id": "c9dd46b3-873c-4263-9a4b-bc158892426b",
+      "name": "Embeddings OpenAI9",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -160,
+        -160
+      ],
+      "id": "09303e05-386b-4c1d-9112-7597ef940c75",
+      "name": "Embeddings OpenAI10",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "The `email_examples` vector store contains examples of professional supplier-facing procurement emails.  \nThese examples illustrate:\n\n• Appropriate tone when communicating with external suppliers  \n• How to request quotations, lead time confirmation, shipment updates, or documentation  \n• Clear, concise language with polite but direct instructions  \n• How to reference items, quantities, expected delivery dates, and operational requirements  \n• The correct level of formality for B2B communication  \n\nIMPORTANT RULES:\n• Do NOT copy or reuse wording from the examples.  \n• Use examples ONLY for communication tone, sentence structure, courtesy expressions, and email flow.  \n• Do NOT invent facts, quantities, dates, or commitments not present in the purchase_request_agent input.  \n• Placeholders must NOT appear in the final output (e.g., \"<SUPPLIER>\").  \n• Keep the email professional, courteous, and actionable.\n\nUsage:\nRetrieve the most relevant example(s) and use them to guide:  \n• Greeting style  \n• Body structure (context → request → next steps)  \n• Clear closing  \nThe final email must be original and fully aligned with the actual supplier, items, and recommended actions.\n",
+        "memoryKey": {
+          "__rl": true,
+          "value": "email_examples",
+          "mode": "list",
+          "cachedResultName": "email_examples"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        272
+      ],
+      "id": "9d095564-8a02-4201-9d19-3f085d9f8969",
+      "name": "Email Examples"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        336
+      ],
+      "id": "d7004e83-625d-4e63-97f4-3487ab91281b",
+      "name": "Embeddings OpenAI11",
+      "credentials": {
+        "openAiApi": {
+          "id": "fkJdiuNsTvZjz7CT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "The `request_examples` vector store contains professional sample purchase request documents.  \nThese examples demonstrate:\n\n• How a purchasing officer summarises analysis findings into an internal request  \n• Clear structure including: header, request summary, item table, justification, and recommended actions  \n• Professional tone suitable for internal managerial approval  \n• How operational risks, lead time considerations, and historical context are framed  \n• Concise, action-oriented writing that supports decision making  \n\nIMPORTANT RULES:\n• Do NOT copy or reproduce sentences or wording from the examples.  \n• Use examples ONLY for structure, tone, and formatting inspiration.  \n• All factual content must come from the actual analysis_agent output and the provided item/supplier data.  \n• Do NOT invent additional items, dates, or operational details.  \n• Do NOT include internal approval routing or signature blocks unless they exist in the input data.\n\nUsage:\nRetrieve 1–2 relevant examples to understand how a clear, formal purchase request is structured.  \nThen produce an original document tailored to the actual supplier, items, and risk context.\n",
+        "memoryKey": {
+          "__rl": true,
+          "value": "request_examples",
+          "mode": "list",
+          "cachedResultName": "request_examples"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        -32
+      ],
+      "id": "7e4baf88-d487-44dc-9a3d-9fba5f995ad5",
+      "name": "Request Examples"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1264,
+        -32
+      ],
+      "id": "6d77474a-d090-4b87-9014-9305cc79470e",
+      "name": "Download Stock List",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -1088,
+        -32
+      ],
+      "id": "175aac25-b523-4323-96cc-93c0c7027b89",
+      "name": "Extract from Stock CSV"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1) 파일명 가져오기 (Download file 노드 JSON 구조에 맞게 경로만 조정하세요)\nconst fileJson = $node[\"Download Stock List\"].json;  // 노드 이름은 실제 워크플로 이름 사용\nconst fileName = fileJson.data?.fileName || fileJson.name || \"\";\n\n// 예: \"Urgent_Stock_050425.csv\" 에서 050425 부분 찾기\nconst m = fileName.match(/(\\d{2})(\\d{2})(\\d{2})/);\n\nlet snapshot_date = null;\n\nif (m) {\n  const [_, dd, mm, yy] = m;\n  const year = 2000 + Number(yy);   // 05 → 2005, 25 → 2025\n  const month = String(Number(mm)).padStart(2, \"0\");\n  const day   = String(Number(dd)).padStart(2, \"0\");\n  snapshot_date = `${year}-${month}-${day}`;   // YYYY-MM-DD\n}\n\n// 2) CSV에서 온 각 row에 snapshot_date를 붙여서 다시 내보내기\nconst rows = $input.all().map(i => i.json);\n\nreturn rows.map(r => ({\n  json: {\n    ...r,\n    snapshot_date,     // 모든 행에 같은 날짜를 붙임\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -896,
+        -32
+      ],
+      "id": "ecf9ea72-0fc2-4616-b7e6-56f0b5f233f1",
+      "name": "Retrieve Snapshot Date from CSV name"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1394a385-8fed-4513-8e19-a45b34805bda",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        624
+      ],
+      "id": "e172c0cc-44bf-424b-ae6e-a7c5e81e6cf1",
+      "name": "Extract Main Text Only2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1394a385-8fed-4513-8e19-a45b34805bda",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        896
+      ],
+      "id": "52d6f6e3-859d-4240-8492-dc33e0c4ed96",
+      "name": "Extract Main Text Only3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1394a385-8fed-4513-8e19-a45b34805bda",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        1168
+      ],
+      "id": "cc6716bc-b3f8-4d31-9b47-06d4d205ed4c",
+      "name": "Extract Main Text Only4"
+    },
+    {
+      "parameters": {
+        "operation": "createFromText",
+        "content": "={{ $json.output }}",
+        "name": "={{ $('Item Grouping, Suggested dates & quantities').item.json.snapshot_date+ '_' + $('Item Grouping, Suggested dates & quantities').item.json.supplier + '.docx' }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1zc2ldFXKU_itPjopFmNwMcu7WMsC1liI",
+          "mode": "list",
+          "cachedResultName": "Purchase-request",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1zc2ldFXKU_itPjopFmNwMcu7WMsC1liI"
+        },
+        "options": {
+          "convertToGoogleDocument": true
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        448,
+        -176
+      ],
+      "id": "ed36e467-9848-4fb0-a40f-88fbbd5e1c97",
+      "name": "Upload Requests to GDrive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "createFromText",
+        "content": "={{ $json.output }}",
+        "name": "={{ $('Item Grouping, Suggested dates & quantities').item.json.snapshot_date+ '_' + $('Item Grouping, Suggested dates & quantities').item.json.supplier + '.docx' }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1QwIqQx5q3c2WGzHQmP36EIuippcbAH4D",
+          "mode": "list",
+          "cachedResultName": "Analysis-report",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1QwIqQx5q3c2WGzHQmP36EIuippcbAH4D"
+        },
+        "options": {
+          "convertToGoogleDocument": true
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        224,
+        -448
+      ],
+      "id": "2d019318-2198-41b9-819e-50d0dd8ca34e",
+      "name": "Upload Reports to GDrive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        48,
+        -448
+      ],
+      "id": "d337fc2c-6ec5-425e-b0bf-43f18c3d4a38",
+      "name": "Loop Over Output Array"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        288,
+        -176
+      ],
+      "id": "cc578f94-ee15-46da-ad3b-fb4e81c6aa89",
+      "name": "Loop Over Document Array"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        304,
+        160
+      ],
+      "id": "9d49033d-66a6-48b6-ad0c-6d120724effc",
+      "name": "Loop over Email Array"
+    },
+    {
+      "parameters": {
+        "operation": "createFromText",
+        "content": "={{ $json.output }}",
+        "name": "={{ $('Item Grouping, Suggested dates & quantities').item.json.snapshot_date+ '_' + $('Item Grouping, Suggested dates & quantities').item.json.supplier + '.docx' }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1LPMRfppvMdJIGU7gFAkUMAfJLUOyBECN",
+          "mode": "list",
+          "cachedResultName": "Email-draft",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1LPMRfppvMdJIGU7gFAkUMAfJLUOyBECN"
+        },
+        "options": {
+          "convertToGoogleDocument": true
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        464,
+        160
+      ],
+      "id": "20f3ebfd-34a3-471f-94f8-16402a7f6a3c",
+      "name": "Upload Email Drafts to GDrive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1vrm8jSz6N12cD5aahvK23PBRRYaZ4T4F",
+            "mode": "list",
+            "cachedResultName": "Analysis-examples",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1vrm8jSz6N12cD5aahvK23PBRRYaZ4T4F"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -512,
+        624
+      ],
+      "id": "8db8860a-062c-4354-b6c6-2c512e6fbc4b",
+      "name": "Search Analysis Examples",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -368,
+        624
+      ],
+      "id": "fa7f0b71-b515-4dac-8ef7-cb5360033550",
+      "name": "Download Analysis Examples",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1OP93JGlQSEUJTdNviRa16BJVcmXUOjKA",
+            "mode": "list",
+            "cachedResultName": "Request-examples",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1OP93JGlQSEUJTdNviRa16BJVcmXUOjKA"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -512,
+        896
+      ],
+      "id": "396009e9-748f-4d73-a084-54e47a0107c2",
+      "name": "Search Request Examples",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -368,
+        896
+      ],
+      "id": "b5d198a2-7350-4d8d-bb3d-a5c60ffc4085",
+      "name": "Download Request Examples",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1zuG1fl4jxeXSDgO72_wWbr644fctMlqy",
+            "mode": "list",
+            "cachedResultName": "Email-examples",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1zuG1fl4jxeXSDgO72_wWbr644fctMlqy"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -512,
+        1168
+      ],
+      "id": "15373e11-1c94-4644-8bf7-db7ea9785d41",
+      "name": "Search Email Examples",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -368,
+        1168
+      ],
+      "id": "003c0caa-c8ea-4a94-8669-36d7d49f38f4",
+      "name": "Download Email Examples",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1ect436g0GBvJMC64M5MrkELNPhjL3dSa",
+            "mode": "list",
+            "cachedResultName": "Input",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1ect436g0GBvJMC64M5MrkELNPhjL3dSa"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1424,
+        -32
+      ],
+      "id": "f1adabc8-e655-4b84-ba26-6d2e884b8737",
+      "name": "Search Stock Lists",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1kPAxn4ltBzK-nCOQu8jqE9DwJhs06fMY",
+            "mode": "list",
+            "cachedResultName": "Supplier-history",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1kPAxn4ltBzK-nCOQu8jqE9DwJhs06fMY"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1440,
+        704
+      ],
+      "id": "c79487bf-eddf-4e7f-936d-c6a9ba3deb4d",
+      "name": "Search Supplier History",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1264,
+        704
+      ],
+      "id": "984d5155-f9f2-4f6c-9d46-a698e06db7cf",
+      "name": "Download Supplier History",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1OMsEaMGJQqsCfvPF1J4b4npXdCASRHlr",
+            "mode": "list",
+            "cachedResultName": "Item-history",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1OMsEaMGJQqsCfvPF1J4b4npXdCASRHlr"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1440,
+        1008
+      ],
+      "id": "5f6e1c2b-395d-4724-b6c9-60893533d97e",
+      "name": "Search Item History",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1264,
+        1008
+      ],
+      "id": "06110851-c8cb-4af9-98f0-dbbfbdcaf4cd",
+      "name": "Download Item History",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "E2IjtgWR4TI0kqjv",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// text from Extract node\nconst text = $json.text || $json.pageContent || \"\";\n\n// We assume each supplier-history document contains a header line:\n// \"Supplier: <Full Supplier Name>\"\nlet supplier_name;\n\n// Strictly look for the explicit header.\n// Example line:\n//   Supplier: Company ABC Ltd\nconst supplierLineMatch = text.match(/Supplier\\s*:\\s*(.+)/i);\n\nif (!supplierLineMatch) {\n  // If this throws, it means the document did not follow the expected format.\n  // That’s a data issue we want to fix rather than silently guessing.\n  throw new Error(\n    \"Missing 'Supplier: ...' header in supplier history document.\"\n  );\n}\n\n// Take everything after \"Supplier:\" up to the end of the line.\nsupplier_name = supplierLineMatch[1]\n  .split(/\\r?\\n/)[0]  // stop at line break\n  .trim();            // remove extra spaces\n\nreturn [\n  {\n    json: {\n      pageContent: text,\n      metadata: {\n        doc_type: \"supplier_history\",\n        supplier_name: supplier_name,\n      },\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -944,
+        704
+      ],
+      "id": "eb1bac60-b886-4c55-a9d8-0962e67adc20",
+      "name": "Extract Supplier Name"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract raw text\nconst text = $json.text || $json.pageContent || \"\";\n\n// ---- Extract item_code only ----\n// Matches typical patterns: ItemCode: 100004  OR  ItemCode 100004\nconst codeMatch = text.match(/ItemCode\\s*[:\\-]?\\s*(\\d+)/i);\nconst item_code = codeMatch ? codeMatch[1] : null;\n\nreturn [\n  {\n    json: {\n      pageContent: text,\n      metadata: {\n        doc_type: \"item_history\",\n        item_code: item_code\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -944,
+        1008
+      ],
+      "id": "7fccdcbe-73fd-4b27-b833-a0b52c497efe",
+      "name": "Extract ItemCode"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are the Purchase Request Draft Agent.\n\nYour role is to transform the analysis_output produced by the Analysis Agent into a structured JSON object that will later be used by the Purchase Request Documentation Agent.\n\nYou must NOT generate a document.\nYou must output structured JSON only.\n\nYou may use the request_examples vector store ONLY to understand:\n- what type of information belongs in each section,\n- how justification and buyer checks are typically structured,\n- how purchase request layouts are organized.\n\nDo NOT copy text from examples.\nDo NOT mimic example sentences.\nDo NOT invent any new data.\n\n------------------------------------------------------------\nINPUT\n------------------------------------------------------------\n\nYou will receive:\n- snapshot_date\n- supplier\n- risk_level\n- analysis_output, containing:\n    - purchasing_report_markdown\n    - critical_questions[]\n    - replenishment_timeline[]  (each item may include suggested_quantity)\n\nUse ONLY this information.\n\n------------------------------------------------------------\nOUTPUT STRUCTURE (MANDATORY)\n------------------------------------------------------------\n\nYou must return a JSON object:\n\n{\n  \"document_type\": \"purchase_request\",\n  \"supplier\": \"<supplier>\",\n  \"snapshot_date\": \"<snapshot_date>\",\n  \"risk_level\": \"<risk_level>\",\n\n  \"overall_context\": {\n    \"summary\": \"<short summary based on analysis_output>\",\n    \"key_risks\": [\"<risk1>\", \"<risk2>\"]\n  },\n\n  \"purchase_requests\": [\n    {\n      \"supplier_name\": \"<supplier>\",\n      \"supplier_level_summary\": \"<summary of supplier considerations>\",\n\n      \"items\": [\n        {\n          \"item_code\": \"<ItemCode>\",\n          \"item_name\": \"<ItemName>\",\n          \"current_stock\": <number or null>,\n          \"wks_to_oos\": <number or null>,\n          \"risk_level\": \"<RiskLevel>\",\n          \"suggested_quantity\": <number or null>,   ← NEW FIELD\n\n          \"justification\": [\n            \"<supplier history (if present)>\",\n            \"<item history (if present)>\",\n            \"<patterns from analysis_output>\",\n            \"<risks inferred from critical_questions>\",\n            \"<best-practice considerations (if present)>\"\n          ],\n\n          \"recommended_action\": \"<concise recommendation>\",\n\n          \"recommended_timeline\": {\n            \"latest_po_issue_date\": \"<from recommended_latest_po_date>\",\n            \"target_receipt_date\": \"<from recommended_latest_delivery_date>\",\n            \"notes\": \"<short explanation>\"\n          },\n\n          \"critical_checks_for_buyer\": [\n            \"<derived from critical_questions>\"\n          ]\n        }\n      ]\n    }\n  ]\n}\n\n------------------------------------------------------------\nRULES\n------------------------------------------------------------\n\n- Use ONLY information inside analysis_output.\n- NEVER invent quantities, dates, reasons, or incidents.\n- suggested_quantity must be copied exactly from replenishment_timeline.\n- If an item has no critical questions, critical_checks_for_buyer may be empty.\n- All items must belong under the same supplier.\n- Output ONLY valid JSON.\n- No markdown, no explanations.\n\nEND OF SYSTEM PROMPT\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -320,
+        -32
+      ],
+      "id": "1c9c4022-61f3-4302-890e-e202cf6f406b",
+      "name": "PR Draft Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json }}",
+        "options": {
+          "systemMessage": "You are the Purchase Request Documentation Agent.\n\nYour task is to transform the structured JSON provided by the Purchase Request Draft Agent into a formal internal purchase requisition document written in clean, simple Markdown.\n\nYou must NOT output JSON.\nYou must NOT invent any data.\nYou must NOT copy text from examples.\nYour document will later be converted into Google Docs, so formatting must remain minimal, consistent, and business-professional.\n\n------------------------------------------------------------\nINPUT\n------------------------------------------------------------\n\nYou will receive one object “request_output” containing:\n\n- document_type\n- supplier\n- snapshot_date\n- risk_level\n\n- overall_context:\n    - summary\n    - key_risks[]\n\n- purchase_requests[]:\n    - supplier_name\n    - supplier_level_summary\n    - items[]:\n        - item_code\n        - item_name\n        - current_stock\n        - wks_to_oos\n        - risk_level\n        - suggested_quantity\n        - justification[]\n        - recommended_action\n        - recommended_timeline:\n             - latest_po_issue_date\n             - target_receipt_date\n             - notes\n        - critical_checks_for_buyer[]\n\nThis is the ONLY valid source of truth.  \nIf any field is missing, write “N/A” or omit the detail.  \nDo NOT guess or infer missing information.\n\nYou may reference the vector store “request_examples” ONLY to understand structural formatting, tone, and general organisation.  \nNever copy or paraphrase their sentences.\n\n------------------------------------------------------------\nDOCUMENT STRUCTURE (MANDATORY)\n------------------------------------------------------------\n\nYour Markdown output must follow this exact order:\n\n------------------------------------------------------------\n1. Header Block\n------------------------------------------------------------\n\nUse a simple header:\n\n# Purchase Request  \n**Request Date:** <snapshot_date>  \n**Supplier:** <supplier>\n\nDo not include Snapshot Date separately (Request Date already reflects it).\nDo not include risk_level in the header.\n\n------------------------------------------------------------\n2. Purpose of Request\n------------------------------------------------------------\n\nWrite a concise explanation based ONLY on:\n\n- overall_context.summary\n- overall_context.key_risks\n- supplier_level_summary\n\nThis section should state:\n\n- that the document requests internal approval to proceed with procurement planning,\n- that items require replenishment due to operational needs or risk considerations,\n- that this document precedes PO issuance.\n\nTone must be professional and strictly factual.\n\n------------------------------------------------------------\n3. Requested Items\n------------------------------------------------------------\n\nCreate a table with the following columns:\n\n| ItemCode | ItemName | Suggested Qty | Notes |\n\n- Suggested Qty = suggested_quantity  \n- Notes = short version of recommended_action OR timeline notes  \nDo NOT invent quantities or units.\n\nIf suggested_quantity is null, write “N/A”.\n\n------------------------------------------------------------\n4. Justification for Procurement\n------------------------------------------------------------\n\nList bullet points based ONLY on:\n\n- overall_context.key_risks\n- supplier_level_summary\n- justification[] from items\n\nInclude general procurement justification such as:\n- supplier reliability concerns (if present)\n- item risk levels or stockout proximity\n- quality or safety issues if mentioned\n\nInclude a closing sentence similar in spirit to:\n“Further analytical details are available in the supplier analysis report.”\n\nThis sentence must be written originally, not copied.\n\n------------------------------------------------------------\n5. Recommended Procurement Timing\n------------------------------------------------------------\n\nFor each item, list:\n\n- **ItemName (ItemCode):**\n  - Recommended PO Issue Date: <latest_po_issue_date>\n  - Target Receipt Date: <target_receipt_date>\n  - Notes: <notes>\n\nDo not add new dates or reinterpretation.  \nKeep formatting simple and consistent.\n\n------------------------------------------------------------\n6. Approval Required\n------------------------------------------------------------\n\nReproduce an approval block like the examples:\n\n- Purchasing Manager (signature)\n- Operations Director (signature)\n- Finance Officer (signature)\n\nDo NOT create real names.\n\n------------------------------------------------------------\nSTYLE RULES\n------------------------------------------------------------\n\n- Use only Markdown.\n- No decorative elements or excessive styling.\n- No placeholders such as <SupplierName>.\n- No JSON output.\n- No invented data.\n- Keep tone concise, neutral, and professional.\n\n------------------------------------------------------------\nFINAL OUTPUT\n------------------------------------------------------------\n\nReturn ONLY the completed Markdown document.\nNo explanations.\nNo system text.\nNo commentary.\n\nEND OF SYSTEM PROMPT\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -176
+      ],
+      "id": "ca0aef32-cc00-4b3f-bc41-7a89444ba47d",
+      "name": "PR Doc Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json }}",
+        "options": {
+          "systemMessage": "You are the Reporting Document Agent.\n\nYour task is to transform the structured JSON produced by the Analysis Agent into a clean, human-readable Markdown report.\n\nYou do NOT generate JSON.\nYou do NOT modify analysis data.\nYou only produce a clean document.\n\nThe final document will be converted to Google Docs, so the formatting must be simple and predictable.\n\n------------------------------------------------------------\nINPUT FORMAT\n------------------------------------------------------------\n\nYou will receive one object called analysis_result, containing:\n\n- snapshot_date\n- supplier\n- purchasing_report_markdown\n- critical_questions[]\n- replenishment_timeline[] (each containing item fields including suggested_quantity)\n\nThis JSON is the ONLY source of truth.\nIf any field is missing or null, use “N/A” or omit it.\nDo NOT guess.\n\nYou may use the vector store:\n- analysis_examples\n\nUse it ONLY for:\n• tone\n• structure\n• formatting guidance\nNever copy sentences or example content.\n\n------------------------------------------------------------\nDOCUMENT STRUCTURE (IN THIS EXACT ORDER)\n------------------------------------------------------------\n\n1. Header\n   Display:\n   - Report Date: snapshot_date\n   - Supplier: supplier\n   - Items: list items as ItemName (ItemCode), comma-separated\n\n2. Executive Summary\n   Write 1–3 short paragraphs based ONLY on:\n   - purchasing_report_markdown\n   - critical_questions\n   - patterns observed in replenishment_timeline\n\n   Mention when present:\n   • supplier reliability issues  \n   • item-level incidents  \n   • unusually short or long weeks-to-OOS  \n   Do NOT reference suggested_quantity.\n\n3. Item Overview Table\n\n   Construct a table using ONLY replenishment_timeline fields:\n\n   | ItemCode | ItemName | CurrentStock | WksToOOS | RiskLevel | SuggestedQty |\n\n   “SuggestedQty” must display analysis_result.replenishment_timeline[].suggested_quantity exactly.\n   Do NOT modify the number.\n   Do NOT interpret or comment on it in the table or elsewhere.\n\n4. Key Concerns\n   Provide 2–5 bullet points based on:\n   - critical_questions\n   - purchasing_report_markdown\n   - obvious risks seen in timeline data\n\n   Do NOT invent issues.\n   Do NOT reference suggested_quantity.\n\n5. Recommended Actions\n   Provide 3–5 operational actions derived ONLY from:\n   - risk levels\n   - critical questions\n   - timeline urgency\n   - supplier/item history in analysis_result\n\n   Do NOT invent dates, quantities, or incidents.\n   Do NOT reference suggested_quantity.\n\n6. Recommended Deadlines\n   Use only date fields:\n\n   | ItemCode | ItemName | Recommended Latest PO Date | Recommended Latest Delivery Date |\n\n   After the table, include ONE advisory sentence only if history indicates risk:\n   “Due to past delivery issues, earlier confirmation may be advisable.”\n\n   If no such risk exists, include no note.\n\n------------------------------------------------------------\nSTYLE RULES\n------------------------------------------------------------\n\n- Output Markdown only\n- Professional, concise tone\n- No JSON in output\n- No placeholders\n- No invented content\n- Do not copy example wording\n\n------------------------------------------------------------\nFINAL OUTPUT\n------------------------------------------------------------\n\nReturn ONLY the final Markdown document.\nNo JSON.\nNo explanations.\n\nEND OF SYSTEM PROMPT\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -304,
+        -448
+      ],
+      "id": "5df24032-4f01-4c8b-b8b8-96d75f14acf3",
+      "name": "Report Doc Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json }}",
+        "options": {
+          "systemMessage": "You are the Email Draft Agent.\n\nYour task is to create a professional, concise, supplier-facing email to be sent by the purchasing team.\nThis email must NOT reveal internal stock levels, internal planning logic, or internal risk assessments.\n\nYou may consult the email_examples vector store ONLY to learn tone, structure, and flow.\nYou must NEVER copy text or invent facts.\n\nYour output must be plain text email only.\nNo JSON.\nNo headings.\nNo commentary.\n\n1. INPUT FORMAT\n\nYou will receive the following fields:\n\nsnapshot_date\n\nsupplier\n\nrisk_level (internal only; do NOT disclose externally)\n\nitems[], each containing:\n\nitem_code\n\nitem_name\n\nsuggested_quantity\n\nrecommended_latest_delivery_date\n\nanalysis_output, containing:\n\ncritical_questions[]\n\nreplenishment_timeline[] (including any supplier/item history notes)\n\nUse these ONLY to understand what to request from the supplier.\nDo NOT reveal internal metrics such as:\n• stock levels\n• wks_to_oos\n• urgency classifications\n• analysis logic\n\n2. EMAIL STRUCTURE (MANDATORY)\n\nYour email MUST follow this exact flow:\n\n1) Greeting\n\nA polite, neutral greeting.\nExample structure (do NOT copy directly):\n“Dear [Supplier] Team,”\n\n2) Purpose of the Email\n\nThis section MUST:\n\nReference the snapshot date (e.g., “based on our stock review dated April 5, 2025”).\n\nState that the purchasing team is preparing for potential replenishment.\n\nClarify that this message is a preliminary request for cooperation before issuing a formal purchase order.\n\nMaintain a calm, neutral tone.\n\nYou MUST NOT:\n\nMention internal risks.\n\nMention internal time windows.\n\nMention stock levels or forecast horizons.\n\nSuggest that a PO has already been approved.\n\n3) Item Summary (EXTERNAL-SAFE FORMAT)\n\nYou MUST list items in this style:\n\nItemName (Code XXXXX) — proposed purchase quantity: <suggested_quantity>; target receipt date: <recommended_latest_delivery_date>\n\nRules:\n\nUse only item_name, item_code, suggested_quantity, and recommended_latest_delivery_date.\n\nIf suggested_quantity = 0 →\nwrite: “no immediate quantity planned; requesting availability information”.\n\nDo NOT include:\n\nstock levels\n\nweeks to OOS\n\ndemand information\n\ninternal timing logic\n\n4) Mention Relevant Supplier or Item History (ONLY IF PRESENT)\n\nIf analysis_output includes confirmed historical issues such as:\n\ndelivery delays\n\nspoilage or quality cases\n\nbatch incidents\n\npast reliability concerns\n\nYou MUST mention them briefly and neutrally.\n\nTone guideline (not for copying):\n\n“We noted a previous delivery delay and would appreciate any updates on preventive measures currently in place.”\n\nIf no history exists, OMIT this entire section.\n\n5) Request for Information (RFI Section)\n\nYou MUST request:\n\nupdated availability for the listed items\n\ncurrent expected lead time\n\nany updated commercial terms or pricing\n\nconfirmation of preventive measures only if history was mentioned\n\nHandling critical_questions (IMPORTANT RULE CHANGE):\n\nDo NOT convert each critical question into a direct question.\n\nInstead:\n\nIdentify the themes of the critical questions.\n\nIncorporate them into 1–2 soft, consolidated request lines such as:\n\n“If there are any factors that may affect delivery timing, please feel free to advise.”\n\n“We would appreciate your guidance on any considerations we should be aware of when planning upcoming orders.”\n\nYou MUST NOT:\n\ninterrogate the supplier aggressively\n\nlist many separate questions\n\nreveal the internal “reason” field\n\nThe RFI section must sound cooperative, light, and respectful, not investigative.\n\n6) Closing Statement\n\nA polite closing thanking the supplier for their cooperation and inviting a timely response.\n\nEnd with a simple signature placeholder:\n\nBest regards,\nCompany K Purchasing Team\n\n3. STRICT RULES\n\nYou MUST NOT:\n\nreveal internal stock levels, wks_to_oos, internal urgency, internal forecasts\n\nmention internal calculations (lead-time logic, buffer logic, risk models)\n\ndisclose internal decision-making processes\n\ninvent incidents or supplier problems\n\npromise a PO\n\ninclude JSON or metadata\n\nTone must always be:\n\npolite\n\nconcise\n\ncooperative\n\nprofessional\n\nThe supplier should feel invited to provide information, not interrogated or blamed.\n\n4. OUTPUT FORMAT\n\nReturn ONLY the final email text.\nNo JSON.\nNo headings.\nNo explanations.\n\nEND OF SYSTEM PROMPT",
+          "maxIterations": 10
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -144,
+        144
+      ],
+      "id": "f2696065-9c87-46c3-bc82-8375fbe892e8",
+      "name": "Supplier Email Draft Agent"
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code node (JavaScript)\n\n// ----- CONFIGURABLE CONSTANTS -----\nconst IMPORT_LEAD_WEEKS = 16;   // Shipping time (weeks)\nconst INTERNAL_LEAD_WEEKS = 2;  // Internal lead time before shipment (weeks)\nconst TOTAL_LEAD_WEEKS = IMPORT_LEAD_WEEKS + INTERNAL_LEAD_WEEKS;\n\n// How many weeks to cover \"AFTER\" the latest DELIVERY date (6 months ≒ 26 weeks)\nconst COVERAGE_WEEKS_AFTER_DELIVERY = 26;\n\nconst MS_PER_DAY = 24 * 60 * 60 * 1000;\n\n// ----- DATE HELPERS -----\nfunction parseDate(dateStr) {\n  if (!dateStr || typeof dateStr !== \"string\") {\n    throw new Error(`snapshot_date is missing or invalid: ${dateStr}`);\n  }\n  // Parse date assuming UTC midnight\n  return new Date(dateStr + \"T00:00:00Z\");\n}\n\nfunction formatDate(date) {\n  const year = date.getUTCFullYear();\n  const month = String(date.getUTCMonth() + 1).padStart(2, \"0\");\n  const day = String(date.getUTCDate()).padStart(2, \"0\");\n  return `${year}-${month}-${day}`;\n}\n\nfunction addDays(date, days) {\n  return new Date(date.getTime() + days * MS_PER_DAY);\n}\n\n// ----- TIMING LABEL HELPER -----\nfunction buildTimingLabelFromWeeks(weeksDiff) {\n  if (weeksDiff <= 0.5) return \"immediately\";\n  if (weeksDiff <= 1)   return \"within 1 week\";\n  if (weeksDiff <= 2)   return \"within 2 weeks\";\n  if (weeksDiff <= 4)   return \"within 2–4 weeks\";\n  if (weeksDiff <= 8)   return \"within 4–8 weeks\";\n  return `within ${Math.round(weeksDiff)} weeks`;\n}\n\n// ----- RECOMMENDATION LOGIC FOR ONE ITEM (DATES/TIMING) -----\nfunction buildRecommendationsForItem(snapshotDateStr, wksToOOSRaw) {\n  const snapshotDate = parseDate(snapshotDateStr);\n\n  const wksToOOS = Number(wksToOOSRaw);\n  // If WksToOOS is invalid, assume the total lead time is the effective OOS period\n  const effectiveWksToOOS = isNaN(wksToOOS) ? TOTAL_LEAD_WEEKS : wksToOOS;\n\n  // Date reached by moving forward for the duration the current stock can last \n  // = the latest required delivery completion date (to prevent stockout)\n  const latestDeliveryDate = addDays(snapshotDate, effectiveWksToOOS * 7);\n\n  // Date reached by moving backward by the total lead time \n  // = the last possible PO placement date (deadline)\n  let latestPoDate = addDays(latestDeliveryDate, -TOTAL_LEAD_WEEKS * 7);\n\n  // If the PO date is in the past, \"right now\" is the deadline\n  if (latestPoDate < snapshotDate) {\n    latestPoDate = snapshotDate;\n  }\n\n  const weeksUntilPo =\n    (latestPoDate.getTime() - snapshotDate.getTime()) / MS_PER_DAY / 7;\n  const weeksUntilDelivery =\n    (latestDeliveryDate.getTime() - snapshotDate.getTime()) / MS_PER_DAY / 7;\n\n  const poTimingLabel = buildTimingLabelFromWeeks(weeksUntilPo);\n  const deliveryTimingLabel = buildTimingLabelFromWeeks(weeksUntilDelivery);\n\n  return {\n    recommended_latest_po_date: formatDate(latestPoDate),\n    recommended_latest_delivery_date: formatDate(latestDeliveryDate),\n    recommended_latest_po_timing: poTimingLabel,\n    recommended_latest_delivery_timing: deliveryTimingLabel,\n  };\n}\n\n// ----- SUGGESTED QUANTITY LOGIC (BASED ON LATEST DELIVERY) -----\n// Goal: Order a quantity that covers at least 6 months (26 weeks) \n// AFTER the recommended_latest_delivery_date (assuming stock is near 0 at delivery).\nfunction computeSuggestedQuantityAtLatestDelivery(currentStockRaw, wksToOOSRaw) {\n  const stock = Number(currentStockRaw);\n  const wks = Number(wksToOOSRaw);\n\n  // If invalid, quantity estimation is impossible -> return null\n  if (!isFinite(stock) || stock <= 0 || !isFinite(wks) || wks <= 0) {\n    return null;\n  }\n\n  // Estimate weekly demand\n  const weeklyDemand = stock / wks;\n\n  // Assume existing stock is close to 0 at the latest delivery time.\n  // Order quantity covering COVERAGE_WEEKS_AFTER_DELIVERY after that time.\n  const targetStockAtDelivery = weeklyDemand * COVERAGE_WEEKS_AFTER_DELIVERY;\n\n  const orderQty = targetStockAtDelivery;\n\n  // If 0 or less, no order is needed\n  if (orderQty <= 0) {\n    return 0;\n  }\n\n  return Math.ceil(orderQty);\n}\n\n// ----- KEY NORMALISATION HELPER -----\n// Normalize by removing BOM, spaces, underscores, and converting to lowercase for matching\nfunction findField(json, targetName) {\n  // Normalize target name (lowercase, remove non-alphanumeric)\n  const normTarget = targetName.toLowerCase(); \n  const keys = Object.keys(json);\n\n  for (const k of keys) {\n    const normKey = k\n      .replace(/\\uFEFF/g, \"\")      // remove BOM\n      .replace(/[^a-zA-Z0-9]/g, \"\") // remove non-alphanumerics\n      .toLowerCase();\n\n    if (normKey === normTarget) {\n      return json[k];\n    }\n  }\n  return undefined;\n}\n\n// ----- MAIN: GROUP BY SUPPLIER -----\n\nconst inputItems = $input.all();\nconst groupsBySupplier = {};\n\n// Group all items by Supplier (and assume snapshot_date is consistent per file)\nfor (const { json } of inputItems) {\n  const snapshotDate = String(findField(json, \"snapshotdate\") || \"\").trim();\n  const supplier = String(findField(json, \"suppliername\") || \"\").trim();\n  const riskLevel = String(findField(json, \"risklevel\") || \"\").trim();\n\n  const itemCodeRaw = findField(json, \"itemcode\");\n  const itemName = findField(json, \"itemname\");\n  const currentStockRaw = findField(json, \"currentstock\");\n  const wksToOOSRaw = findField(json, \"wkstooos\");\n\n  if (!snapshotDate || !supplier || itemCodeRaw === undefined || itemName === undefined) {\n    // Skip invalid rows (missing essential data)\n    continue;\n  }\n\n  // Calculate recommended dates and timing labels\n  const rec = buildRecommendationsForItem(snapshotDate, wksToOOSRaw);\n  // Calculate suggested order quantity\n  const suggestedQty = computeSuggestedQuantityAtLatestDelivery(currentStockRaw, wksToOOSRaw);\n\n  const itemObj = {\n    item_code: String(itemCodeRaw),\n    item_name: String(itemName),\n    risk_level: riskLevel || \"N/A\",\n    current_stock: currentStockRaw !== undefined ? Number(currentStockRaw) : null,\n    wks_to_oos: wksToOOSRaw !== undefined ? Number(wksToOOSRaw) : null,\n    suggested_quantity: suggestedQty,\n    recommended_latest_po_date: rec.recommended_latest_po_date,\n    recommended_latest_delivery_date: rec.recommended_latest_delivery_date,\n    recommended_latest_po_timing: rec.recommended_latest_po_timing,\n    recommended_latest_delivery_timing: rec.recommended_latest_delivery_timing,\n  };\n\n  // Initialize group if not present\n  if (!groupsBySupplier[supplier]) {\n    groupsBySupplier[supplier] = {\n      snapshot_date: snapshotDate,\n      supplier: supplier,\n      items: [],\n    };\n  }\n\n  // Add item to the corresponding group\n  groupsBySupplier[supplier].items.push(itemObj);\n}\n\n// Convert groups (object values) into n8n items\nconst output = Object.values(groupsBySupplier).map(group => ({ json: group }));\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -736,
+        -32
+      ],
+      "id": "ec5910ec-5f65-44ef-84c4-140ab88c73c2",
+      "name": "Item Grouping, Suggested dates & quantities"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "The `analysis_examples` vector store contains high-quality sample analysis reports.\nThese examples illustrate:\n\n• Professional tone and narrative style  \n• Clear structure (Executive Summary, Item Overview, Key Concerns, Recommended Actions, Deadlines)  \n• How historical supplier/item context is incorporated  \n• How risks and operational considerations are explained  \n• How tables, headings, and paragraphs are formatted\n\nIMPORTANT RULES:\n• Do NOT copy or reproduce text from the examples.  \n• Use them ONLY to understand structure, tone, and how information is presented.  \n• Do NOT invent facts. All factual statements must come from the actual input data or other tool calls (supplier_history, item_history, best_practices).  \n• The examples are for stylistic guidance—not for factual content.\n\nWhen retrieving documents from this tool:\n• Select only the most relevant examples (max 2–3)  \n• Use them to inspire organisation, clarity, and professional phrasing  \n• Do not output placeholders from examples  \n• Do not reference the examples explicitly in the final report\n\nGoal:\nEnable the Analysis Agent to produce a clean, structured, and professionally-written analysis report that follows best-practice patterns demonstrated in the examples, while ensuring the output remains entirely original and tailored to the actual item/supplier data.\n",
+        "memoryKey": {
+          "__rl": true,
+          "value": "analysis_examples",
+          "mode": "list",
+          "cachedResultName": "analysis_examples"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -208,
+        -288
+      ],
+      "id": "ee2a95f3-c578-4793-b457-fddf1fb5bb2c",
+      "name": "Analysis Examples"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1904,
+        112
+      ],
+      "id": "59a2cd92-82f5-481e-8c9e-12fd221e1720",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "combineBySql",
+        "numberInputs": 5,
+        "query": "SELECT 1 END",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        544,
+        784
+      ],
+      "id": "2d523c0d-4b35-4992-9ce7-76b42611cafe",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Analysis Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Supplier Email Draft Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from PDF5": {
+      "main": [
+        [
+          {
+            "node": "Extract Supplier Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI4": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supplier History SVS",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader3": {
+      "ai_document": [
+        [
+          {
+            "node": "Supplier History SVS",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from PDF6": {
+      "main": [
+        [
+          {
+            "node": "Extract ItemCode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI5": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Item History SVS",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader4": {
+      "ai_document": [
+        [
+          {
+            "node": "Item History SVS",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "PR Draft Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Report Doc Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "PR Doc Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supplier History": {
+      "ai_tool": [
+        [
+          {
+            "node": "Analysis Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supplier History",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item History": {
+      "ai_tool": [
+        [
+          {
+            "node": "Analysis Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Item History",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from PDF": {
+      "main": [
+        [
+          {
+            "node": "Extract Main Text Only2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI6": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Analysis Examples SVS",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Analysis Examples SVS",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from PDF1": {
+      "main": [
+        [
+          {
+            "node": "Extract Main Text Only3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI7": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Request Examples SVS",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Request Examples SVS",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from PDF2": {
+      "main": [
+        [
+          {
+            "node": "Extract Main Text Only4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI8": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Email Examples SVS",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader5": {
+      "ai_document": [
+        [
+          {
+            "node": "Email Examples SVS",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analysis Agent": {
+      "main": [
+        [
+          {
+            "node": "Report Doc Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "PR Draft Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI9": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Request Examples",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI10": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Analysis Examples",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Examples": {
+      "ai_tool": [
+        [
+          {
+            "node": "Supplier Email Draft Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI11": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Email Examples",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Examples": {
+      "ai_tool": [
+        [
+          {
+            "node": "PR Doc Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Stock List": {
+      "main": [
+        [
+          {
+            "node": "Extract from Stock CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from Stock CSV": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Snapshot Date from CSV name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Snapshot Date from CSV name": {
+      "main": [
+        [
+          {
+            "node": "Item Grouping, Suggested dates & quantities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Main Text Only2": {
+      "main": [
+        [
+          {
+            "node": "Analysis Examples SVS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Main Text Only3": {
+      "main": [
+        [
+          {
+            "node": "Request Examples SVS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Main Text Only4": {
+      "main": [
+        [
+          {
+            "node": "Email Examples SVS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Output Array": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Upload Reports to GDrive",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Output Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Document Array": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Over Document Array",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload Requests to GDrive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop over Email Array": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop over Email Array",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload Email Drafts to GDrive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Analysis Examples": {
+      "main": [
+        [
+          {
+            "node": "Download Analysis Examples",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Analysis Examples": {
+      "main": [
+        [
+          {
+            "node": "Extract from PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Request Examples": {
+      "main": [
+        [
+          {
+            "node": "Download Request Examples",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Request Examples": {
+      "main": [
+        [
+          {
+            "node": "Extract from PDF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Email Examples": {
+      "main": [
+        [
+          {
+            "node": "Download Email Examples",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Email Examples": {
+      "main": [
+        [
+          {
+            "node": "Extract from PDF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Stock Lists": {
+      "main": [
+        [
+          {
+            "node": "Download Stock List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supplier History SVS": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Item History SVS": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Analysis Examples SVS": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Examples SVS": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Email Examples SVS": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Search Supplier History": {
+      "main": [
+        [
+          {
+            "node": "Download Supplier History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Supplier History": {
+      "main": [
+        [
+          {
+            "node": "Extract from PDF5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Item History": {
+      "main": [
+        [
+          {
+            "node": "Download Item History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Item History": {
+      "main": [
+        [
+          {
+            "node": "Extract from PDF6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Supplier Name": {
+      "main": [
+        [
+          {
+            "node": "Supplier History SVS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract ItemCode": {
+      "main": [
+        [
+          {
+            "node": "Item History SVS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PR Draft Agent": {
+      "main": [
+        [
+          {
+            "node": "PR Doc Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Supplier Email Draft Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PR Doc Agent": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Document Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Report Doc Agent": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Output Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supplier Email Draft Agent": {
+      "main": [
+        [
+          {
+            "node": "Loop over Email Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Grouping, Suggested dates & quantities": {
+      "main": [
+        [
+          {
+            "node": "Analysis Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analysis Examples": {
+      "ai_tool": [
+        [
+          {
+            "node": "Report Doc Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Search Supplier History",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search Item History",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search Analysis Examples",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search Request Examples",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search Email Examples",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Search Stock Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9fb2a7da-7e8d-4c4a-a2a8-78578a603177",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bcabe78c32569f9a861a22ad11fa948ae4fbf9f087bc4ce97b2b3430db961ebe"
+  },
+  "id": "Vratp19AHGfJCE0a",
+  "tags": []
+}
