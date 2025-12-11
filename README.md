@@ -15,12 +15,12 @@ All data is anonymised. The structure mirrors the production purchasing environm
 
 ## 1. System Overview
 
-**Layer 1**
+**Layer 1 (Knowledge Vector)**
 <img width="1222" height="521" alt="Layer1" src="https://github.com/user-attachments/assets/d10d1697-4c9d-40c1-8858-715fc99a681a" />
 
 <br>
 
-**Layer 2**
+**Layer 2 (LLMs)**
 <img width="1297" height="586" alt="Layer2" src="https://github.com/user-attachments/assets/295d6a31-b0ea-4d08-8d29-9761cd9ea4ea" />
 
 
