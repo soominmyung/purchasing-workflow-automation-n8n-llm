@@ -2,6 +2,8 @@
 
 This project is an **enterprise-grade AI solution** designed to automate the end-to-end purchasing workflow. By combining a high-performance **FastAPI** backend with a **LangChain Multi-agent** architecture, it transforms raw inventory data into deep analytical reports and ready-to-use procurement documents.
 
+**Link**: [Https://soominmyung.com/purchasing_automation](https://soominmyung.com/purchasing-automation)
+
 ---
 
 ## 🛠️ Actual Tech Stack
@@ -55,8 +57,3 @@ Designed specifically for serverless/ephemeral environments like Hugging Face Sp
 * **POST /api/run/stream**: Upload inventory CSV and execute real-time streaming analysis.
 * **POST /api/ingest/{type}/zip**: Batch-learn historical documents via ZIP upload.
 * **GET /api/output/download**: Download generated reports and email drafts.
-
----
-
-## Link
-[Https://soominmyung.com/purchasing_automation](https://soominmyung.com/purchasing-automation)
