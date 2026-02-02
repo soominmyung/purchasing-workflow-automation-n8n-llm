@@ -2,11 +2,17 @@
 
 This project is an **enterprise-grade AI solution** designed to automate the end-to-end purchasing workflow. By combining a high-performance **FastAPI** backend with a **LangChain Multi-agent** architecture, it transforms raw inventory data into deep analytical reports and ready-to-use procurement documents.
 
+It demonstrates how **CSV-based stock snapshots, supplier and item history documents, and structured examples** are orchestrated through a multi-agent LLM pipeline to produce:
+
+**1. Purchasing Analysis Report** — structured insights and risk assessments   
+**2. Purchase Request Document** — grouped by supplier for approval workflows  
+**3. Supplier Email Drafts** — external communication requesting timelines or availability
+
 **Link**: https://soominmyung.com/purchasing-automation
 
 ---
 
-## Actual Tech Stack
+## Tech Stack
 
 This project implements a production-ready architecture using the following technologies:
 
