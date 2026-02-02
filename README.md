@@ -2,7 +2,7 @@
 
 This project is an **enterprise-grade AI solution** designed to automate the end-to-end purchasing workflow. By combining a high-performance **FastAPI** backend with a **LangChain Multi-agent** architecture, it transforms raw inventory data into deep analytical reports and ready-to-use procurement documents.
 
-**Link**: [Https://soominmyung.com/purchasing_automation](https://soominmyung.com/purchasing-automation)
+**Link**: https://soominmyung.com/purchasing-automation
 
 ---
 
