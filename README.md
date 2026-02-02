@@ -1,61 +1,170 @@
-# Purchasing Automation Suite (FastAPI + LLM + Docker)
+# 🤖 Purchasing Workflow Automation (n8n + LLM)
 
-This project is an **enterprise-grade AI solution** designed to automate the end-to-end purchasing workflow. By combining a high-performance **FastAPI** backend with a **LangChain Multi-agent** architecture, it transforms raw inventory data into deep analytical reports and ready-to-use procurement documents.
+This repository provides an anonymised, reproducible version of the automation system described in Evidence 5 – LLM + n8n Automation for Purchasing Workflow.
 
-It demonstrates how **CSV-based stock snapshots, supplier and item history documents, and structured examples** are orchestrated through a multi-agent LLM pipeline to produce:
+It demonstrates how CSV-based stock snapshots, supplier and item history documents, and structured examples are orchestrated through n8n and a multi-agent LLM pipeline to produce:
 
-**1. Purchasing Analysis Report** — structured insights and risk assessments   
-**2. Purchase Request Document** — grouped by supplier for approval workflows  
-**3. Supplier Email Drafts** — external communication requesting timelines or availability
+1. Purchasing Analysis Report (DOCX) — stored in the “Analysis-report” folder  
+2. Purchase Request Document (DOCX) — one file per supplier, saved into “Purchase-request”  
+3. Supplier Email Drafts (DOCX) — supplier-facing drafts saved into “Email-draft”  
 
-**Link**: https://soominmyung.com/purchasing-automation
-
----
-
-## Tech Stack
-
-This project implements a production-ready architecture using the following technologies:
-
-* **Backend**: Python, FastAPI (Asynchronous API, SSE Streaming)
-* **AI Framework**: LangChain (Multi-agent Orchestration, Tool Binding)
-* **LLM**: OpenAI GPT-4o / GPT-4o-mini
-* **Vector Database**: ChromaDB (RAG - Retrieval Augmented Generation)
-* **Frontend Interface**: React, Framer (Custom Code Components), TypeScript
-* **Data Processing**: Pandas (CSV), PyPDF (Extraction), Python-docx (Word Generation)
-* **Infrastructure**: Docker (Containerization for Hugging Face Spaces)
+All output files follow the naming pattern: YYYY-MM-DD_SupplierName.docx.  
+All data is anonymised. The structure mirrors the production purchasing environment.
 
 ---
 
-## Key Technical Competencies
+## 1. System Overview
 
-### 1️⃣ Real-time Event Streaming (SSE)
-Beyond a simple request-response model, this system utilizes **Server-Sent Events (SSE)** to provide real-time feedback to the user at every stage of the pipeline: CSV parsing → Item Grouping → AI Analysis → Document Generation.
+**Layer 1**
+**Layer 1 (Knowledge Vector)**
+<img width="1222" height="521" alt="Layer1" src="https://github.com/user-attachments/assets/d10d1697-4c9d-40c1-8858-715fc99a681a" />
 
-### 2️⃣ Scalable RAG-based Data Ingestion
-* **Bulk Processing**: Developed a scalable API capable of ingesting multiple PDFs or **ZIP archives** for high-volume data training.
-* **Automated Metadata Extraction**: Utilizes Regex to automatically identify Supplier names and ItemCodes within documents, mapping them to Vector DB metadata for high-precision retrieval.
+<br>
 
-### 3️⃣ Multi-Agent Orchestration
-Instead of relying on a single prompt, the system orchestrates **five specialized agents**. The Analysis Agent uses Tools to search the knowledge base, while specialized Documentation Agents transform those findings into various professional formats.
+**Layer 2**
+**Layer 2 (LLMs)**
+<img width="1297" height="586" alt="Layer2" src="https://github.com/user-attachments/assets/295d6a31-b0ea-4d08-8d29-9761cd9ea4ea" />
 
-### 4️⃣ Ephemeral Environment Optimization (Memory-first)
-Designed specifically for serverless/ephemeral environments like Hugging Face Spaces, the system supports a **memory-first approach** where documents are generated as bytes and encoded to **Base64** for instant client-side download, bypassing persistent disk requirements.
+
+The automation converts a daily CSV snapshot into complete purchasing artefacts:
+
+• Internal analysis report — structured insights and risk assessments  
+• Purchase request (PR) draft — grouped by supplier for approval workflows  
+• Supplier email drafts — external communication requesting timelines or availability  
+
+The workflow integrates:
+
+• CSV ingestion  
+• Retrieval of supplier and item history via vector stores  
+• Example-guided formatting using analysis/request/email templates  
+• A multi-agent LLM pipeline  
+• Automatic export to document folders via n8n  
 
 ---
 
-## Project Structure
+## 2. Architecture
 
-* **main.py**: FastAPI Entry point & CORS configuration
-* **routers/**: API Layer (Pipeline, Ingest, Output)
-* **services/**: Business Logic (AI Agents, Vector Store, Grouping)
-* **utils/**: Utilities (CSV Parsing, PDF Extraction, Word Generation)
-* **schemas.py**: Data Models & Validation (Pydantic)
-* **config.py**: Environment Variables & System Settings
+High-level flow:
+
+1. CSV Snapshot → JS Computation Layer  
+   - Extracts snapshot date  
+   - Groups items by supplier  
+   - Computes suggested PO timelines and quantities using lead-time windows and depletion trends  
+
+2. Analysis Agent  
+   - Reads supplier and item history documents  
+   - Produces structured analytical JSON per supplier  
+
+3. Downstream Agents  
+   - Report Document Agent → internal purchasing report  
+   - PR Draft Agent → purchase-request JSON  
+   - PR Document Agent → formatted PR document  
+   - Email Draft Agent → supplier-facing email draft  
+
+4. Output Delivery  
+   - Final DOCX files are written into: Analysis-report, Purchase-request, Email-draft  
 
 ---
 
-## Key API Endpoints
+## 3. n8n Workflow
 
-* **POST /api/run/stream**: Upload inventory CSV and execute real-time streaming analysis.
-* **POST /api/ingest/{type}/zip**: Batch-learn historical documents via ZIP upload.
-* **GET /api/output/download**: Download generated reports and email drafts.
+The workflow JSON file is located at:
+
+n8n/purchasing_automation_workflow.json
+
+Components include:
+
+• Manual trigger used for demonstration, simulating the sequence normally initiated by a new CSV snapshot  
+• Folder ingestion for: Input, Supplier-history, Item-history, Analysis-examples, Request-examples, Email-examples  
+• Text extraction → embedding → vector-store ingestion  
+• Analysis, PR Draft, PR Document and Email Draft agents  
+• Automated DOCX export into the appropriate output folders  
+
+To import into n8n:
+
+1. Open n8n  
+2. Create a new workflow  
+3. Select “Import from File” and choose the JSON  
+4. Update API/file-storage credentials as needed  
+
+---
+
+## 4. Data & Vector Stores
+
+The repository mirrors the original Google Drive structure.
+
+### 4.1 Input CSVs  
+Folder: data/Input/
+
+Typical columns:
+
+• ItemCode  
+• ItemName  
+• SupplierName  
+• RiskLevel  
+• CurrentStock  
+• WksToOOS  
+
+CSV files are named according to their snapshot date.
+
+### 4.2 Vector Store Documents
+
+• Supplier-history — delivery issues, supplier performance notes, escalation history  
+• Item-history — demand patterns, packaging or quality issues  
+• Analysis-examples — example internal reports used as structural guidance  
+• Request-examples — example purchase request documents  
+• Email-examples — example supplier-facing communication formats  
+
+These documents are used to build vector-store context for the LLM agents.
+
+---
+
+## 5. Prompts & Pseudocode
+
+Located in:
+
+docs/prompts/
+
+Each file contains:
+
+• Input schema specification  
+• Output JSON/text format  
+• Behavioural guardrails and constraints  
+
+---
+
+## 6. Example Outputs
+
+Produced by the automated workflow and stored in:
+
+data/Analysis-report/  
+data/Purchase-request/  
+data/Email-draft/  
+
+These examples match the artefacts generated by the workflow using anonymised sample data.
+
+---
+
+## 7. Repository Structure
+
+```
+purchasing-workflow-automation-n8n-llm/
+├─ n8n/
+│  └─ purchasing_automation_workflow.json
+├─ data/
+│  ├─ Input/
+│  ├─ Supplier-history/
+│  ├─ Item-history/
+│  ├─ Analysis-examples/
+│  ├─ Request-examples/
+│  ├─ Email-examples/
+│  ├─ Analysis-report/
+│  ├─ Purchase-request/
+│  └─ Email-draft/
+├─ docs/
+│  ├─ screenshots/
+│  └─ prompts/
+└─ README.md
+```
+
+This structure reflects the real purchasing automation workflow in a safe, anonymised form suitable for GTV evidence documentation.
