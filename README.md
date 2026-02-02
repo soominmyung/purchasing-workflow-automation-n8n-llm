@@ -1,4 +1,4 @@
-# 🤖 Purchasing Automation Suite (FastAPI + LLM + Framer)
+# Purchasing Automation Suite (FastAPI + LLM + Framer)
 
 This project is an **enterprise-grade AI solution** designed to automate the end-to-end purchasing workflow. By combining a high-performance **FastAPI** backend with a **LangChain Multi-agent** architecture, it transforms raw inventory data into deep analytical reports and ready-to-use procurement documents.
 
@@ -6,7 +6,7 @@ This project is an **enterprise-grade AI solution** designed to automate the end
 
 ---
 
-## 🛠️ Actual Tech Stack
+## Actual Tech Stack
 
 This project implements a production-ready architecture using the following technologies:
 
@@ -20,9 +20,7 @@ This project implements a production-ready architecture using the following tech
 
 ---
 
-## 🚀 Key Technical Competencies
-
-
+## Key Technical Competencies
 
 ### 1️⃣ Real-time Event Streaming (SSE)
 Beyond a simple request-response model, this system utilizes **Server-Sent Events (SSE)** to provide real-time feedback to the user at every stage of the pipeline: CSV parsing → Item Grouping → AI Analysis → Document Generation.
@@ -39,9 +37,7 @@ Designed specifically for serverless/ephemeral environments like Hugging Face Sp
 
 ---
 
-## 📂 Project Structure
-
-
+## Project Structure
 
 * **main.py**: FastAPI Entry point & CORS configuration
 * **routers/**: API Layer (Pipeline, Ingest, Output)
@@ -52,7 +48,7 @@ Designed specifically for serverless/ephemeral environments like Hugging Face Sp
 
 ---
 
-## 🔗 Key API Endpoints
+## Key API Endpoints
 
 * **POST /api/run/stream**: Upload inventory CSV and execute real-time streaming analysis.
 * **POST /api/ingest/{type}/zip**: Batch-learn historical documents via ZIP upload.
